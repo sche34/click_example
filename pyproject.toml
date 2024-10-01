@@ -1,0 +1,25 @@
+[project]
+name = "voorbeeld"
+version = "0.1.0"
+description = "Add your description here"
+dependencies = [
+    "click>=8.1.7",
+]
+requires-python = ">= 3.8"
+
+[project.scripts]
+"visual" = "voorbeeld.main:visual"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.rye]
+managed = true
+dev-dependencies = []
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/voorbeeld"]
