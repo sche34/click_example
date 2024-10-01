@@ -9,11 +9,11 @@ def visual(week, all):
         raise ValueError('Must be 1, 2 or 3')
     
     if week == "1" or all:
-        print('Now it run the class of visual one')
+        print('Now it runs the class of visual one')
     if week == '2' or all:
-        print('Now it run the class of visual two')
+        print('Now it runs the class of visual two')
     if week == '3' or all:
-        print('Now it run the class of visual three')
+        print('Now it runs the class of visual three')
     
 if __name__ == '__main__':
     visual()
