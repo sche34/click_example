@@ -1,5 +1,8 @@
 import click
 
+from voorbeeld.visual1 import create_visual1
+from voorbeeld.visual2 import create_visual2
+
 @click.command()
 @click.option("--week", default="1", help="Choose the visual number (1, 2 or 3)")
 @click.option("--all", default=False)
@@ -9,11 +12,9 @@ def visual(week, all):
         raise ValueError('Must be 1, 2 or 3')
     
     if week == "1" or all:
-        print('Now it runs the class of visual one')
+        create_visual1()
     if week == '2' or all:
-        print('Now it runs the class of visual two')
-    if week == '3' or all:
-        print('Now it runs the class of visual three')
+        create_visual2()
     
 if __name__ == '__main__':
     visual()
