@@ -4,6 +4,7 @@ version = "0.1.0"
 description = "Add your description here"
 dependencies = [
     "click>=8.1.7",
+    "configparser>=7.1.0",
     "matplotlib>=3.7.5",
     "pathlib>=1.0.1",
 ]

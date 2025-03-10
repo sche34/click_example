@@ -1,23 +1,51 @@
+from abc import ABC, abstractmethod
+from configparser import ConfigParser
+from dataclasses import dataclass
 from pathlib import Path
 
-class PlotSettings:
-    output_folder = Path("output")
 
-    def __init__(self, title="", xlabel="", ylabel="", axis_on=True, grid_on=False, legend_on=False):
-        self.title = title
-        self.xlabel = xlabel
-        self.ylabel = ylabel
-        self.axis_on = axis_on
-        self.grid_on = grid_on
-        self.legend_on = legend_on
+@dataclass
+class Settings:
+    title: str
+    xlabel: str
+    ylabel: str
+    axis_off: bool
+    grid_on: bool
+    legend_on: bool
+    output_folder: Path
+
+
+class CreateVisual(ABC):
+    def __init__(self, section: str):
+        self.settings = self.load_settings(section)
+
+    def load_settings(self, section: str) -> Settings:
+        config_object = ConfigParser()
+        config_object.read("config.toml")
+        config_general = config_object["general"]
+        config_visual = config_object[section]
+
+        return Settings(
+            title=config_visual["title"],
+            xlabel=config_visual["xlabel"],
+            ylabel=config_visual["ylabel"],
+            axis_off=config_visual.get("axis_off", False),
+            grid_on=config_visual.getboolean("grid_on", False),
+            legend_on=config_visual.getboolean("legend_on", False),
+            output_folder=Path(config_general["output_folder"]),
+        )
+
+    @abstractmethod
+    def create_visual(self) -> None:
+        pass
 
     def apply_settings(self, ax):
-        ax.set_title(self.title)
-        ax.set_xlabel(self.xlabel)
-        ax.set_ylabel(self.ylabel)
-        if not self.axis_on:
-            ax.axis('off')
-        if self.grid_on:
+        ax.set_title(self.settings.title)
+        ax.set_xlabel(self.settings.xlabel)
+        ax.set_ylabel(self.settings.ylabel)
+        if self.settings.axis_off:
+            ax.set_axis_off()
+        if self.settings.grid_on:
             ax.grid(True)
-        if self.legend_on:
+        if self.settings.legend_on:
             ax.legend()
