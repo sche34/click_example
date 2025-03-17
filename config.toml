@@ -1,13 +1,13 @@
 [general]
-output_folder=visuals
+output_folder = "visuals"
 
 [visual1]
-title=Number of attendees drops after initial rise
-ylabel=Attendees
-xlabel=Week
-grid_on=True
+title = "Number of attendees drops after initial rise"
+ylabel = "Attendees"
+xlabel = "Week"
+grid_on = true
 
 [visual2]
-title=Team B find more bugs than A & C
-xlabel=Team
-ylabel=Bugs Found
+title = "Team B find more bugs than A & C"
+xlabel = "Team"
+ylabel = "Bugs Found"

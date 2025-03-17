@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from configparser import ConfigParser
+import tomllib
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -19,19 +19,23 @@ class CreateVisual(ABC):
     def __init__(self, section: str):
         self.settings = self.load_settings(section)
 
+    def set_config(self):
+        configfile = Path("config.toml").resolve()
+        with configfile.open("rb") as f:
+            self.config = tomllib.load(f)
+
     def load_settings(self, section: str) -> Settings:
-        config_object = ConfigParser()
-        config_object.read("config.toml")
-        config_general = config_object["general"]
-        config_visual = config_object[section]
+        self.set_config()
+        config_general = self.config["general"]
+        config_visual = self.config[section]
 
         return Settings(
             title=config_visual["title"],
             xlabel=config_visual["xlabel"],
             ylabel=config_visual["ylabel"],
             axis_off=config_visual.get("axis_off", False),
-            grid_on=config_visual.getboolean("grid_on", False),
-            legend_on=config_visual.getboolean("legend_on", False),
+            grid_on=config_visual.get("grid_on", False),
+            legend_on=config_visual.get("legend_on", False),
             output_folder=Path(config_general["output_folder"]),
         )
 
